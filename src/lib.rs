@@ -14,9 +14,6 @@ pub use self::ip_addr::{IpAddr, Ipv4Addr, Ipv6Addr, Ipv6MulticastScope};
 pub use self::parser::AddrParseError;
 pub use self::socket_addr::{SocketAddr, SocketAddrV4, SocketAddrV6};
 
-//pub use core::net::display_buffer;
-
-mod display_buffer;
 mod ip_addr;
 mod parser;
 mod socket_addr;

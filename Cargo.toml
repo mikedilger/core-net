@@ -1,5 +1,5 @@
 [package]
-name = "ipaddrlib"
+name = "core-net"
 version = "0.1.0"
 edition = "2021"
 

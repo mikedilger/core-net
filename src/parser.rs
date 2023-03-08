@@ -3,13 +3,13 @@
 //! This module is "publicly exported" through the `FromStr` implementations
 //! below.
 
-use crate::convert::TryInto;
-use crate::error::Error;
-use crate::fmt;
-use crate::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};
-use crate::str::FromStr;
+use core::convert::TryInto;
+use std::error::Error;
+use core::fmt;
+use crate::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};
+use core::str::FromStr;
 
-trait ReadNumberHelper: crate::marker::Sized {
+trait ReadNumberHelper: core::marker::Sized {
     const ZERO: Self;
     fn checked_mul(&self, other: u32) -> Option<Self>;
     fn checked_add(&self, other: u32) -> Option<Self>;
@@ -275,9 +275,7 @@ impl IpAddr {
     /// Parse an IP address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
+    /// use core_net::{IpAddr, Ipv4Addr, Ipv6Addr};
     ///
     /// let localhost_v4 = IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1));
     /// let localhost_v6 = IpAddr::V6(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 1));
@@ -301,9 +299,7 @@ impl Ipv4Addr {
     /// Parse an IPv4 address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::Ipv4Addr;
+    /// use core_net::Ipv4Addr;
     ///
     /// let localhost = Ipv4Addr::new(127, 0, 0, 1);
     ///
@@ -330,9 +326,7 @@ impl Ipv6Addr {
     /// Parse an IPv6 address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::Ipv6Addr;
+    /// use core_net::Ipv6Addr;
     ///
     /// let localhost = Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 1);
     ///
@@ -354,9 +348,7 @@ impl SocketAddrV4 {
     /// Parse an IPv4 socket address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::{Ipv4Addr, SocketAddrV4};
+    /// use core_net::{Ipv4Addr, SocketAddrV4};
     ///
     /// let socket = SocketAddrV4::new(Ipv4Addr::new(127, 0, 0, 1), 8080);
     ///
@@ -378,9 +370,7 @@ impl SocketAddrV6 {
     /// Parse an IPv6 socket address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::{Ipv6Addr, SocketAddrV6};
+    /// use core_net::{Ipv6Addr, SocketAddrV6};
     ///
     /// let socket = SocketAddrV6::new(Ipv6Addr::new(0x2001, 0xdb8, 0, 0, 0, 0, 0, 1), 8080, 0, 0);
     ///
@@ -402,9 +392,7 @@ impl SocketAddr {
     /// Parse a socket address from a slice of bytes.
     ///
     /// ```
-    /// #![feature(addr_parse_ascii)]
-    ///
-    /// use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
+    /// use core_net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
     ///
     /// let socket_v4 = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 8080);
     /// let socket_v6 = SocketAddr::new(IpAddr::V6(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 1)), 8080);
@@ -446,14 +434,14 @@ enum AddrKind {
 /// often because it includes information only handled by a different address type.
 ///
 /// ```should_panic
-/// use std::net::IpAddr;
+/// use core_net::IpAddr;
 /// let _foo: IpAddr = "127.0.0.1:8080".parse().expect("Cannot handle the socket port");
 /// ```
 ///
 /// [`IpAddr`] doesn't handle the port. Use [`SocketAddr`] instead.
 ///
 /// ```
-/// use std::net::SocketAddr;
+/// use core_net::SocketAddr;
 ///
 /// // No problem, the `panic!` message has disappeared.
 /// let _foo: SocketAddr = "127.0.0.1:8080".parse().expect("unreachable panic");
